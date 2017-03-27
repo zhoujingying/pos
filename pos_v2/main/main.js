@@ -71,10 +71,23 @@ function getCartPromotions(items){
     return items;
 }
 
+function getSinglePrice(items){
+    items.forEach(function(val,index){
+        if(val.type === 'BUY_TWO_GET_ONE_FREE'&&val.count>2){
+            val.totalPrice = val.price*(val.count-1);
+            val.totalSave = val.price;
+        }else{
+            val.totalPrice = val.price*val.count;
+        }
+    })
+    return items;
+}
+
 module.exports = {
     getBarcode:getBarcode,
     getCounted:getCounted,
     getCartInfo:getCartInfo,
-    getCartPromotions:getCartPromotions
+    getCartPromotions:getCartPromotions,
+    getSinglePrice:getSinglePrice
 
 }

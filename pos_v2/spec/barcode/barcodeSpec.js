@@ -137,8 +137,8 @@ describe('',function(){
                     count:5,
                     unit: '瓶',
                     price: 3.00,
-                    totalPrice:12,
-                    totalSave:3,
+                    totalPrice:12.00,
+                    totalSave:3.00,
                     type:'BUY_TWO_GET_ONE_FREE'
                 },
                 {
@@ -155,5 +155,60 @@ describe('',function(){
         )
     })
 
-    
-})
+    it('should return an array with single cart price',function(){
+        expect(barcode.getTotalPrice(
+            [
+                {
+                    barcode:'ITEM000001',
+                    name: '雪碧',
+                    count:5,
+                    unit: '瓶',
+                    price: 3.00,
+                    totalPrice:12.00,
+                    totalSave:3.00,
+                    type:'BUY_TWO_GET_ONE_FREE'
+                },
+                {
+                    barcode: 'ITEM000003',
+                    name: '荔枝',
+                    count:2.5,
+                    unit: '斤',
+                    price: 15.00,
+                    totalPrice:37.50,
+                    totalSave:0,
+                    type:null
+                }
+            ]   
+            )).toEqual(
+                [
+                    {price:49.50},
+                    {save:3.00},
+                    [   
+                        
+                        {
+                            barcode:'ITEM000001',
+                            name: '雪碧',
+                            count:5,
+                            unit: '瓶',
+                            price: 3.00,
+                            totalPrice:12.00,
+                            totalSave:3.00,
+                            type:'BUY_TWO_GET_ONE_FREE'
+                        },
+                        {
+                            barcode: 'ITEM000003',
+                            name: '荔枝',
+                            count:2.5,
+                            unit: '斤',
+                            price: 15.00,
+                            totalPrice:37.50,
+                            totalSave:0,
+                            type:null
+                        }
+                    ]
+                ]
+                )
+            })
+
+            
+        })
