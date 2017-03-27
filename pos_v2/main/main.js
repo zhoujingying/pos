@@ -83,11 +83,28 @@ function getSinglePrice(items){
     return items;
 }
 
+function getTotalPrice(items){
+    var result = [];
+    var price = 0;
+    var save = 0;
+    items.forEach(function(val,index){
+        price += val.totalPrice;
+        save += val.totalSave;
+    })
+    result[0] = {
+        price:price,
+        save:save
+    }
+    result[1] = items;
+    return result;
+}
+
 module.exports = {
     getBarcode:getBarcode,
     getCounted:getCounted,
     getCartInfo:getCartInfo,
     getCartPromotions:getCartPromotions,
-    getSinglePrice:getSinglePrice
+    getSinglePrice:getSinglePrice,
+    getTotalPrice:getTotalPrice
 
 }

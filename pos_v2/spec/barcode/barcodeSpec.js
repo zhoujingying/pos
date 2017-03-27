@@ -155,7 +155,7 @@ describe('',function(){
         )
     })
 
-    it('should return an array with single cart price',function(){
+    it('should return an array with total price,total save and items',function(){
         expect(barcode.getTotalPrice(
             [
                 {
@@ -181,8 +181,10 @@ describe('',function(){
             ]   
             )).toEqual(
                 [
-                    {price:49.50},
-                    {save:3.00},
+                    {
+                        price:49.50,
+                        save:3.00
+                    },
                     [   
                         
                         {
