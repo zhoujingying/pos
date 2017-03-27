@@ -25,7 +25,14 @@ function getBarcode(tags){
     })
     return result;  
 }
+function countBarcode(tags,barcodes){
+    barcodes = getBarcode(tags);
+    tags.forEach(function(val,index){
+
+    })
+}
 
 module.exports = {
-    getBarcode:getBarcode
+    getBarcode:getBarcode,
+    countBarcode:countBarcode
 }
