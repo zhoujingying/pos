@@ -19,20 +19,23 @@ function getBarcode(tags){
         else {
                 result.push({
                 barcode:bVal,
-                count:1
+                count:0
             })
         } 
     })
-    return result;  
-}
-function countBarcode(tags,barcodes){
-    barcodes = getBarcode(tags);
-    tags.forEach(function(val,index){
 
+    result.forEach(function(val,index){
+        tags.forEach(function(tVal,index){
+            if(val.barcode === tVal){
+                    val.count++;
+            }
+        })
     })
+    
+    return result; 
 }
+
 
 module.exports = {
-    getBarcode:getBarcode,
-    countBarcode:countBarcode
+    getBarcode:getBarcode
 }
