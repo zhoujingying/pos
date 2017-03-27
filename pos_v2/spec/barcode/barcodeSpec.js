@@ -1,31 +1,49 @@
 describe('',function(){
     var barcode = require('../../main/main.js');
     it('should return an array with objs that counted',function(){
-        expect(barcode.getBarcode(['ITEM000001','ITEM000002-3','ITEM000001','ITEM000002'])).toEqual(
+        expect(barcode.getBarcode(['ITEM000001','ITEM000002-3'])).toEqual(
             [
                 {
                     barcode:'ITEM000001',
-                    count:2
+                    count:1
                 },
                 {
                     barcode:'ITEM000002',
+                    count:3
+                }
+            ]
+        );
+    })
+    it('should return an array that counted',function(){
+        expect(barcode.getCounted(
+            [
+                {
+                    barcode:'ITEM000001',
+                    count:1
+                },
+                {
+                    barcode:'ITEM000001',
+                    count:3
+                }
+            ]          
+            )).toEqual(
+            [
+                {
+                    barcode:'ITEM000001',
                     count:4
                 }
             ]
         );
     })
-
     it('should return an array with cart information',function(){
-        expect(barcode.getCartInfo([
+        expect(barcode.getCartInfo(
+            [
                 {
                     barcode:'ITEM000001',
                     count:2
-                },
-                {
-                    barcode:'ITEM000002',
-                    count:4
                 }
-            ])).toEqual(
+            ]
+            )).toEqual(
             [
                 {
                     barcode:'ITEM000001',
@@ -35,21 +53,12 @@ describe('',function(){
                     price: 3.00,
                     totalPrice:0,
                     totalSave:0
-                },
-                {
-                    barcode:'ITEM000002',
-                    count:4,
-                    name: '苹果',
-                    unit: '斤',
-                    price: 5.50,
-                    totalPrice:0,
-                    totalSave:0           
                 }
             ]
             )
     })
     it('should return an array with cart loadPromotions',function(){
-        expect(
+        expect(barcode.getCartPromotions(
             [
                 {
                     barcode:'ITEM000001',
@@ -67,10 +76,10 @@ describe('',function(){
                     unit: '斤',
                     price: 5.50,
                     totalPrice:0,
-                    totalSave:0           
+                    totalSave:0
                 }
-            ]
-        ).toEqual(
+            ]   
+            )).toEqual(
             [
                 {
                     barcode:'ITEM000001',
@@ -91,6 +100,56 @@ describe('',function(){
                     totalPrice:0,
                     totalSave:0,
                     type:null        
+                }
+            ]
+        )
+    })
+    
+    it('should return an array with single cart price',function(){
+        expect(barcode.getSinglePrice(
+            [
+                {
+                    barcode:'ITEM000001',
+                    name: '雪碧',
+                    count:5,
+                    unit: '瓶',
+                    price: 3.00,
+                    totalPrice:0,
+                    totalSave:0,
+                    type:'BUY_TWO_GET_ONE_FREE'
+                },
+                {
+                    barcode: 'ITEM000003',
+                    name: '荔枝',
+                    count:2.5,
+                    unit: '斤',
+                    price: 15.00,
+                    totalPrice:0,
+                    totalSave:0,
+                    type:null
+                }
+            ]   
+            )).toEqual(
+            [
+                {
+                    barcode:'ITEM000001',
+                    name: '雪碧',
+                    count:5,
+                    unit: '瓶',
+                    price: 3.00,
+                    totalPrice:12,
+                    totalSave:3,
+                    type:'BUY_TWO_GET_ONE_FREE'
+                },
+                {
+                    barcode: 'ITEM000003',
+                    name: '荔枝',
+                    count:2.5,
+                    unit: '斤',
+                    price: 15.00,
+                    totalPrice:37.50,
+                    totalSave:0,
+                    type:null
                 }
             ]
         )

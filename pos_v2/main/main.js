@@ -1,5 +1,6 @@
 'use strict';
 var load = require('../test/fixtures');
+
 function getBarcode(tags){
     var result = [];
     var barcode = [];
@@ -19,23 +20,28 @@ function getBarcode(tags){
         else {
                 result.push({
                 barcode:bVal,
-                count:0
+                count:1
             })
         } 
     })
+    return result; 
+}
 
-    result.forEach(function(val,index){
-        tags.forEach(function(tVal,index){
-            if(val.barcode === tVal){
-                    val.count++;
+function getCounted(items){
+    var result = items.filter(v=>v.count>1);
+    items.forEach(function(val,index){
+        result.forEach(function(rVal,index){
+            if(rVal.barcode !== val.barcode){
+                result.push(val);
+            }else if(rVal.barcode === val.barcode&&val.count==1){
+                rVal.count++;
             }
         })
     })
-    
-    return result; 
+    return result;
 }
+
 function getCartInfo(items){
-    // items = getBarcode(tags);
     var allItems = load.loadAllItems();
     items.forEach(function(val,index){
         allItems.forEach(function(aVal,index){
@@ -51,7 +57,24 @@ function getCartInfo(items){
     return items;
 }
 
+function getCartPromotions(items){
+    var allPro = load.loadPromotions();
+    items.forEach(function(iVal,index){
+        allPro.forEach(function(val,index){
+            if(val.barcodes.includes(iVal.barcode)){
+                iVal.type = val.type;
+            }else{
+                iVal.type = null;
+            }
+        })
+    })
+    return items;
+}
+
 module.exports = {
     getBarcode:getBarcode,
-    getCartInfo:getCartInfo
+    getCounted:getCounted,
+    getCartInfo:getCartInfo,
+    getCartPromotions:getCartPromotions
+
 }
