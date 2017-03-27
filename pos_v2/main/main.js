@@ -1,5 +1,5 @@
 'use strict';
-
+var load = require('../test/fixtures');
 function getBarcode(tags){
     var result = [];
     var barcode = [];
@@ -34,8 +34,24 @@ function getBarcode(tags){
     
     return result; 
 }
-
+function getCartInfo(items){
+    // items = getBarcode(tags);
+    var allItems = load.loadAllItems();
+    items.forEach(function(val,index){
+        allItems.forEach(function(aVal,index){
+            if(val.barcode === aVal.barcode){
+                val.name = aVal.name;
+                val.unit = aVal.unit;
+                val.price = aVal.price;
+                val.totalPrice = 0;
+                val.totalSave = 0;  
+            }
+        })
+    })
+    return items;
+}
 
 module.exports = {
-    getBarcode:getBarcode
+    getBarcode:getBarcode,
+    getCartInfo:getCartInfo
 }
